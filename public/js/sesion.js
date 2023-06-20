@@ -1,7 +1,7 @@
 function login() {
   var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
-  if (email === "julian@gmail.com" && password === "1234") {
+  if (email === "alejoc0314@gmail.com" && password === "1234") {
     alert("Inicio sesion exitoso");
     window.location.href = "/home";
   } else {

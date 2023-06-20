@@ -50,67 +50,73 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Registrar roles en el sistema</h3>
-                                    <div class="col-lg-12" style="float: right; width: 16%; margin-right: -4.5%">
-                                        <a class="btn btn-success" onclick="validateForm()">Crear nuevo rol</a>
+                                <form action="">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Registrar roles en el sistema</h3>
+                                        <div class="col-lg-12" style="float: right; width: 16%; margin-right: -6.1%">
+                                            <a class="btn btn-success" onclick="registrarRol()">Crear nuevo rol</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="tipo_pago">Nombre</label>
-                                            <div class="form-group" style="display:flex">
-                                                <input type="text" class="form-control" id="nombre"
-                                                    placeholder="Ingrese el nombre del nuevo rol"/>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="tipo_pago">Nombre</label>
+                                                <div class="form-group" style="display:flex">
+                                                    <input type="text" class="form-control" id="nombreRol"
+                                                        placeholder="Ingrese el nombre del nuevo rol" />
+                                                </div>
+                                                <div class="texto5" id="texto1"></div>
                                             </div>
-                                            <div class="texto5" id="texto1"></div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="tipo_pago">Descripción</label>
-                                            <div class="form-group" style="display:flex">
-                                                <input type="text" class="form-control" id="descripcion"
-                                                    placeholder="Ingrese una breve descripción sobre el rol"/>
+                                            <div class="col-md-6">
+                                                <label for="tipo_pago">Descripción</label>
+                                                <div class="form-group" style="display:flex">
+                                                    <input type="text" class="form-control" id="descripcionRol"
+                                                        placeholder="Ingrese una breve descripción sobre el rol" />
+                                                </div>
+                                                <div class="texto5" id="texto2"></div>
                                             </div>
-                                            <div class="texto5" id="texto2"></div>
+
+                                            <div class="card-body">
+                                                <div class="texto5" id="texto3"></div>
+                                                <table id="example2" class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Módulo</th>
+                                                            <th>Permiso</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {{#each lista_modulos}}
+                                                        <tr>
+                                                            <td>{{ nombre_modulo }}</td>
+                                                            <td>
+                                                                <input type="checkbox" value="{{nombre_modulo}}">
+                                                            </td>
+                                                        </tr>
+                                                        {{/each}}
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>Módulo</th>
+                                                            <th>Permiso</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                                <input type="hidden" id="modulosRolInput" name="modulosRol" />
+                                            </div>
                                         </div>
-        
-                                        <div class="card-body">
-                                            <table id="example2" class="table table-bordered table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Módulo</th>
-                                                        <th>Permiso</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {{#each lista_modulos}}
-                                                    <tr>
-                                                        <td>{{ nombre_modulo }}</td>
-                                                        <td>
-                                                            <button><input type="checkbox"></button>
-                                                        </td>
-                                                    </tr>
-                                                    {{/each}}
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>Módulo</th>
-                                                        <th>Permiso</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                        <!-- /.card-body -->
                                     </div>
-                                    <!-- /.card -->
-                                </div>
-                                <!-- /.col -->
+                                </form>
+                                <!-- /.card-body -->
                             </div>
-                            <!-- /.row -->
+                            <!-- /.card -->
                         </div>
-                        <!-- /.container-fluid -->
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
             </section>
             <!-- /.content -->
         </div>
@@ -148,6 +154,8 @@
     <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="https://kit.fontawesome.com/4de2284caa.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- AdminLTE App -->
     <script src="/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->

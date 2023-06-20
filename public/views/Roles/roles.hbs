@@ -22,7 +22,7 @@
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
 
-       {{> navbar}}
+        {{> navbar}}
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -51,7 +51,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">{{consecutivo}} registrados en el sistema</h3>
-                                    <div class="col-lg-12" style="float: right; width: 16%; margin-right: -7%">
+                                    <div class="col-lg-12" style="float: right; width: 16%; margin-right: -8.3%">
                                         <a class="btn btn-success" href="/registroRoles">Agregar rol</a>
                                     </div>
                                 </div>
@@ -60,8 +60,8 @@
                                     <table id="example2" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>N° Rol</th>
                                                 <th>Nombre</th>
+                                                <th>Modulos</th>
                                                 <th>Descripción</th>
                                                 <th>Estado</th>
                                                 <th>Acciones</th>
@@ -70,14 +70,23 @@
                                         <tbody>
                                             {{#each lista_roles}}
                                             <tr>
-                                                <td>{{ id_rol }}</td>
-                                                <td>{{ nombre_rol }}</td>
-                                                <td>{{ descripcion_rol }}</td>
-                                                <td>{{ estado_rol }}</td>
+                                                <td>{{ nombreRol }}</td>
                                                 <td>
-                                                    <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                                    <button><i class="fa-solid fa-trash-can"></i></button>
-                                                    <button><i class="fa-solid fa-toggle-on"></i></button>
+                                                    <ul>
+                                                        {{#each modulosRol}}
+                                                        <li>{{ this }}</li>
+                                                        {{/each}}
+                                                    </ul>
+                                                </td>
+                                                <td>{{ descripcionRol }}</td>
+                                                <td>{{ estadoRol }}</td>
+                                                <td>
+                                                    <a class='btn btn-primary' href="/editarRoles?_id={{_id}}"><i
+                                                            class="fa-solid fa-eye"></i></a>
+                                                    <button class='btn btn-warning' onclick="cambiarEstadoRol({{_id}})"><i
+                                                            class="fa-solid fa-toggle-on"></i></button>
+                                                    <button class='btn btn-danger' onclick="eliminarRol('{{_id}}')"><i
+                                                            class="fa-solid fa-trash-can"></i></button>
                                                 </td>
                                             </tr>
                                             {{/each}}
@@ -86,7 +95,7 @@
                                             <tr>
                                                 <th>N° Rol</th>
                                                 <th>Nombre</th>
-                                                <th>Descripción</th>
+                                                <th>Modulos</th>
                                                 <th>Estado</th>
                                                 <th>Acciones</th>
                                             </tr>
@@ -139,11 +148,13 @@
     <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="https://kit.fontawesome.com/4de2284caa.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- AdminLTE App -->
     <script src="/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="/js/demo.js"></script>
     <!-- Page specific script -->
+    <script src="/js/funcionesRoles.js"></script>
     <script>
         $(function () {
             $("#example1").DataTable({

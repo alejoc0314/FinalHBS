@@ -50,8 +50,11 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title">{{consecutivo}} en el sistema</h3>
-                                    <div class="col-lg-12" style="float: right; width: 16%; margin-right: -2.2%">
-                                        <a class="btn btn-success" onclick="validateForm()">Crear nuevo pedido</a>
+                                    <div class="col-lg-12" style="float: right; width: 16%; margin-right: -3.9%">
+                                        <a id="btnCrearPedido" class="btn btn-success"
+                                            data-lista-detalle="{{ jsonStringify listaDetalle }}">Crear nuevo
+                                            pedido</a>
+
                                     </div>
                                 </div>
                                 <!-- /.card-header -->
@@ -61,7 +64,7 @@
                                             <div class="form-group">
                                                 <label for="cliente">Cliente</label>
                                                 <select type="text" class="form-control" id="cliente"
-                                                    placeholder="Seleccione el cliente" style="width: 100%;" />
+                                                    placeholder="Seleccione el cliente" style="width: 100%;">
                                                     <option value="">Seleccione el cliente</option>
                                                     <option value="Variedades la negra">Variedades la negra</option>
                                                     <option value="Makro">Makro</option>
@@ -74,7 +77,7 @@
                                             <div class="form-group">
                                                 <label for="empleado">Vendedor</label>
                                                 <select type="text" class="form-control" id="empleado"
-                                                    placeholder="Seleccione el empleado" style="width: 100%;" />
+                                                    placeholder="Seleccione el empleado" style="width: 100%;">
                                                     <option value="">Seleccione el empleado que realizó la venta
                                                     </option>
                                                     <option value="Julian Carreño">Julian Carreño</option>
@@ -97,11 +100,11 @@
                                             <div class="form-group">
                                                 <label for="tipo_pago">Tipo de pago</label>
                                                 <select type="text" class="form-control" id="tipo_pago"
-                                                    placeholder="Seleccione el tipo de pago" style="width: 100%;" />
-                                                <option value="">Seleccione el tipo de pago
-                                                </option>
-                                                <option value="Contado">Contado</option>
-                                                <option value="Crédito">Crédito</option>
+                                                    placeholder="Seleccione el tipo de pago" style="width: 100%;">
+                                                    <option value="">Seleccione el tipo de pago
+                                                    </option>
+                                                    <option value="Contado">Contado</option>
+                                                    <option value="Crédito">Crédito</option>
                                                 </select>
                                             </div>
                                             <div class="texto5" id="texto4"></div>
@@ -109,12 +112,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="producto">Producto</label>
-                                                <select type="text" class="form-control" id="producto"
-                                                    placeholder="Seleccione el tipo de pago" style="width: 100%;" />
-                                                <option value="{{id_producto}}">Labial</option>
-                                                <option value="{{id_producto}}">Polvo</option>
+                                                <select class="form-control" id="producto"
+                                                    placeholder="Seleccione el tipo de pago" style="width: 100%;">
+                                                    {{#each listaProductos.producto}}
+                                                    <option value="{{_id}}">{{nombreProducto}}</option>
+                                                    {{/each}}
                                                 </select>
                                             </div>
+                                            <div class="texto5" id="texto5"></div>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="cantidad">Cantidad</label>
@@ -122,8 +127,9 @@
                                                 <input type="number" class="form-control" id="cantidad"
                                                     placeholder="Ingrese la cantidad de productos" />
                                                 <div class="col-md-6">
-                                                    <a class="btn btn-success" style="width: 102.5%">Agregar
-                                                        productos</a>
+                                                    <button class="btn btn-success" style="width: 102.5%"
+                                                        onclick="agregarProducto()">Agregar
+                                                        productos</button>
                                                 </div>
                                             </div>
                                             <div class="texto5" id="texto5"></div>
@@ -135,20 +141,24 @@
                                                     <tr>
                                                         <th>Producto</th>
                                                         <th>Cantidad</th>
-                                                        <th>Precio</th>
+                                                        <th>Precio Compra</th>
+                                                        <th>Precio Venta</th>
+                                                        <th>Precio Total</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {{#each lista_pedidos}}
+                                                    {{#each listaDetalle}}
                                                     <tr>
-                                                        <td>{{ producto }}</td>
-                                                        <td>{{ cantidad }}</td>
-                                                        <td>{{ precio }}</td>
+                                                        <td>{{ this.nombreProducto }}</td>
+                                                        <td>{{ this.cantidad }}</td>
+                                                        <td>{{ this.precioCompra }}</td>
+                                                        <td>{{ this.precioVenta }}</td>
+                                                        <td>{{ this.precioTotal }}</td>
                                                         <td>
-                                                            <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                                            <button><i class="fa-solid fa-trash-can"></i></button>
-                                                            <button><i class="fa-solid fa-toggle-on"></i></button>
+                                                            <button class='btn btn-danger'
+                                                                onclick="eliminarProducto('{{this._id}}')">
+                                                                <i class="fa-solid fa-trash-can"></i></button>
                                                         </td>
                                                     </tr>
                                                     {{/each}}
@@ -157,7 +167,9 @@
                                                     <tr>
                                                         <th>Producto</th>
                                                         <th>Cantidad</th>
-                                                        <th>Precio</th>
+                                                        <th>Precio Compra</th>
+                                                        <th>Precio Venta</th>
+                                                        <th>Precio Total</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </tfoot>
@@ -209,6 +221,7 @@
     <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="https://kit.fontawesome.com/4de2284caa.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- AdminLTE App -->
     <script src="/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
