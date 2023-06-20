@@ -349,9 +349,13 @@ app.post('/registroPedidos', (req, res) => {
         }],
     };
 
-
     const productoEncontrado = listaProductos.producto.find(producto => producto._id == _id);
     if (productoEncontrado) {
+        const productoExistente = listaDetalle.find(detalle => detalle._id === _id);
+        if (productoExistente) {
+            const mensajeError = 'El producto ya ha sido agregado.';
+            res.status(400).json({ error: mensajeError }); 
+
         const precioTotal = productoEncontrado.precioVenta * cantidad;
         const productoFinal = {
             ...productoEncontrado,
